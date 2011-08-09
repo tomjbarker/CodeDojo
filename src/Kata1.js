@@ -38,6 +38,12 @@ var katas = (function(){
         return array;
     }
 
+    // Problem 4 helper
+    function numberOfDigits(n, base) {
+        base = base || 10;
+        return parseInt(Math.log(n, 10) / Math.log(base, 10), base);
+    }
+
     // Problem 7 helper
     // Returns an array of size n + 1.
     // Elements that contain 0 are NOT prime.
@@ -64,6 +70,48 @@ var katas = (function(){
     }
 
     return{
+        // Problem 8
+        largestProdOfNConsDigits : function (strNum, n, base) {
+            n = n || 5;
+            base = base || 10;
+
+            var i, temp, result = 1;
+
+            function consectutiveProduct(strNumArg, iArg) {
+                var j, thisDigit, nextDigit, res = 1, arr = new Array(n);
+
+                thisDigit = parseInt(strNumArg[iArg], base);
+                for (j = 0; j < n; j += 1) {
+                    nextDigit = parseInt(strNumArg[iArg + j + 1], base);
+                    if (thisDigit === 0) {
+                        return 1;
+                    }
+                    if (thisDigit === nextDigit) {
+                        res *= thisDigit;
+                        arr.push(thisDigit);
+                            console.log(arr);
+                        if (j + 1 === n - 1) {
+                            res *= nextDigit;
+                            arr.push(nextDigit);
+                            return res;
+                        }
+                    } else {
+                        return 1;
+                    }
+                }
+                return 1;
+            }
+
+            for (i = 0; i < strNum.length - n + 1; i += 1) {
+                temp = consectutiveProduct(strNum, i);
+                if (temp > result) {
+                    result = temp;
+                }
+            }
+
+            return result;
+        },
+
         // Problem 7
         nthPrime : function (n) {
             var upperBound = nthPrimeUpperBound(n),
@@ -120,7 +168,7 @@ var katas = (function(){
         nextLowestPalindrome : function (n, base) {
             var base = base || 10,
                 orgN = n,
-                numOfDigits = parseInt(Math.log(n, 10) / Math.log(base, 10), base),
+                numOfDigits = numberOfDigits(n, base),
                 min = 1,
                 max = Math.pow(base, numOfDigits),
                 palin = 0;
