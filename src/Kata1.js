@@ -1,4 +1,15 @@
 var katas = (function(){
+    function addFactor(n, arr) {
+        var j;
+
+        for (j=0; j < arr.length; j++) {
+            if (n % arr[j] == 0) {
+                return n;
+            }
+        }
+        return 0;
+    }
+
 	function getNextFib(nMinus1, nMinus2) {
 		return (nMinus1 + nMinus2);
 	}
@@ -41,8 +52,31 @@ var katas = (function(){
 		
 		return array;
 	}
+
+    // Eric Bach, Jeffrey Shallit (1996). Algorithmic Number Theory. 1. MIT Press. p. 233. ISBN 0-262-02405-5.
+    function nthPrimeUpperBound(n) {
+        return parseInt(n*Math.log(n) + n*Math.log(Math.log(n)), 10);
+    }
 	
 	return{
+        nthPrime : function (n) {
+            var upperBound = nthPrimeUpperBound(n),
+                array, i, j = 0;
+            
+            array = sieveOfEratosthenes(upperBound);
+
+            for (i = 2; i < array.length; i += 1) {
+                if (typeof array[i] === "undefined") {
+                    j += 1;
+                    if (j === n) {
+                        return i;
+                    }
+                }
+            }
+
+            return -1;
+        },
+
 		nextLowestPalindrome : function (n, base) {
 			var base = base || 10,
 				orgN = n,
@@ -169,17 +203,11 @@ var katas = (function(){
 			return result;
 		},
 		
-		
 		sumNaturalNumbers : function(ceiling, arrayOfFactors){
-			var sum = 0, i, j;
+			var sum = 0, i;
 			
 			for (i=0; i < ceiling; i++) {
-				for (j=0; j < arrayOfFactors.length; j++) {
-					if (i % arrayOfFactors[j] == 0) {
-						sum += i;
-						break;
-					}
-				}
+                sum += addFactor(i, arrayOfFactors);
 			}
 			return sum;
 		}
