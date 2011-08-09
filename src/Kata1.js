@@ -72,44 +72,30 @@ var katas = (function(){
     return{
         // Problem 8
         largestProdOfNConsDigits : function (strNum, n, base) {
-            n = n || 5;
             base = base || 10;
 
-            var i, temp, result = 1;
+			var i, j = 0, consNums = [], result = 1;
+			
+			consNums[0] = "";
+			for (i = 0; i < strNum.length; i += 1) {
+				if (strNum[i] === strNum[i + 1]) {
+					consNums[j] += strNum[i];
+					if (strNum[i + 1] !== strNum[i + 2]) {
+						consNums[j] += strNum[i + 1];
+						j += 1;
+						consNums[j] = "";
+					}
+				}
+			}
+			consNums = consNums.sort(function (a, b) {
+				return parseInt(a, base) < parseInt(b, base);
+			});
 
-            function consectutiveProduct(strNumArg, iArg) {
-                var j, thisDigit, nextDigit, res = 1, arr = new Array(n);
+			for (i = 0; i < n; i += 1) {
+				result *= parseInt(consNums[i], base);
+			}
 
-                thisDigit = parseInt(strNumArg[iArg], base);
-                for (j = 0; j < n; j += 1) {
-                    nextDigit = parseInt(strNumArg[iArg + j + 1], base);
-                    if (thisDigit === 0) {
-                        return 1;
-                    }
-                    if (thisDigit === nextDigit) {
-                        res *= thisDigit;
-                        arr.push(thisDigit);
-                            console.log(arr);
-                        if (j + 1 === n - 1) {
-                            res *= nextDigit;
-                            arr.push(nextDigit);
-                            return res;
-                        }
-                    } else {
-                        return 1;
-                    }
-                }
-                return 1;
-            }
-
-            for (i = 0; i < strNum.length - n + 1; i += 1) {
-                temp = consectutiveProduct(strNum, i);
-                if (temp > result) {
-                    result = temp;
-                }
-            }
-
-            return result;
+			return result;
         },
 
         // Problem 7
