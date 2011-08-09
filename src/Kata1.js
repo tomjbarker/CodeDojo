@@ -1,4 +1,5 @@
 var katas = (function(){
+    // Problem 1 helper
     function addFactor(n, arr) {
         var j;
 
@@ -10,28 +11,12 @@ var katas = (function(){
         return 0;
     }
 
+    // Problem 2 helper
 	function getNextFib(nMinus1, nMinus2) {
 		return (nMinus1 + nMinus2);
 	}
-	
-	// Returns an array of size n + 1.
-	// Elements that contain 0 are NOT prime.
-	// Elements that contain undefined ARE prime.
-	function sieveOfEratosthenes(n) {
-		var i, p, array = new Array(n + 1);
 		
-		for (p = 2; p <= n; p += 1) {
-			if (array[p] === 0) {
-				continue;
-			}
-			for (i = p * p; i <= n; i += p) {
-				array[i] = 0;
-			}
-		}
-
-		return array;
-	}
-	
+    // Problme 3 helper
 	function primeFactors(n) {
 		var array = [];
 	
@@ -53,12 +38,33 @@ var katas = (function(){
 		return array;
 	}
 
+    // Problem 7 helper
+	// Returns an array of size n + 1.
+	// Elements that contain 0 are NOT prime.
+	// Elements that contain undefined ARE prime.
+	function sieveOfEratosthenes(n) {
+		var i, p, array = new Array(n + 1);
+		
+		for (p = 2; p <= n; p += 1) {
+			if (array[p] === 0) {
+				continue;
+			}
+			for (i = p * p; i <= n; i += p) {
+				array[i] = 0;
+			}
+		}
+
+		return array;
+	}
+
+    // Problem 7 helper
     // Eric Bach, Jeffrey Shallit (1996). Algorithmic Number Theory. 1. MIT Press. p. 233. ISBN 0-262-02405-5.
     function nthPrimeUpperBound(n) {
         return parseInt(n*Math.log(n) + n*Math.log(Math.log(n)), 10);
     }
 	
 	return{
+        // Problem 7
         nthPrime : function (n) {
             var upperBound = nthPrimeUpperBound(n),
                 array, i, j = 0;
@@ -76,7 +82,41 @@ var katas = (function(){
 
             return -1;
         },
+			
+        // Problem 6
+		sumOfSqMinusSqOfSums : function(limit){
+			var i, sumOfSq = 0, sqOfSums = 0;
+			
+			for(i = 1; i <= limit; i += 1) {
+				sumOfSq += i*i;
+				sqOfSums += i;
+			}
+			sqOfSums *= sqOfSums;
+			
+			return sqOfSums - sumOfSq;
+		},
+	
+        // Problem 5
+		smallestNumDivisablefrom1to : function(ceiling){
+			var i, j, array = [], result = 1;
+			
+			for (i = 2; i <= ceiling; i+= 1) {
+				array[i] = i;
+			}
+			
+			for (i = 2; i <= ceiling; i += 1) {
+				for (j = 2 * i; j <= ceiling; j += 1) {
+					if (array[j] % array[i] === 0) {
+						array[j] /= array[i];
+					}
+				}
+				result *= array[i];
+			}
+			
+			return result;
+		},
 
+        // Problem 4 helper
 		nextLowestPalindrome : function (n, base) {
 			var base = base || 10,
 				orgN = n,
@@ -126,6 +166,7 @@ var katas = (function(){
 			return palin;
 		},
 		
+        // Problem 4
 		largestPalindromeWithFactors : function (numOfDigitsInFactor, base) {
 			var min = Math.pow(base, numOfDigitsInFactor - 1),
 				max = Math.pow(base, numOfDigitsInFactor) - 1,
@@ -151,44 +192,15 @@ var katas = (function(){
 			}
 			return largestPalindrome(self.nextLowestPalindrome(Math.pow(max, 2), base));
 		},
-		
+			
+        // Problem 3
 		getLargestPrimeFactor : function (n) {			
 			var array = primeFactors(n);
 			
 			return array[array.length - 1];
 		},
 		
-		smallestNumDivisablefrom1to : function(ceiling){
-			var i, j, array = [], result = 1;
-			
-			for (i = 2; i <= ceiling; i+= 1) {
-				array[i] = i;
-			}
-			
-			for (i = 2; i <= ceiling; i += 1) {
-				for (j = 2 * i; j <= ceiling; j += 1) {
-					if (array[j] % array[i] === 0) {
-						array[j] /= array[i];
-					}
-				}
-				result *= array[i];
-			}
-			
-			return result;
-		},
-		
-		sumOfSqMinusSqOfSums : function(limit){
-			var i, sumOfSq = 0, sqOfSums = 0;
-			
-			for(i = 1; i <= limit; i += 1) {
-				sumOfSq += i*i;
-				sqOfSums += i;
-			}
-			sqOfSums *= sqOfSums;
-			
-			return sqOfSums - sumOfSq;
-		},
-			
+        // Problem 2
 		sumFibonacciNumbers : function(ceiling){
 			var fibResult = 0, result = 0, nMinus1 = 1, nMinus2 = 0;
 			
@@ -203,6 +215,7 @@ var katas = (function(){
 			return result;
 		},
 		
+        // Problem 1
 		sumNaturalNumbers : function(ceiling, arrayOfFactors){
 			var sum = 0, i;
 			
