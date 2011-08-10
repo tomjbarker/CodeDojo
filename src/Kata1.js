@@ -69,34 +69,71 @@ var katas = (function(){
         return parseInt(n*Math.log(n) + n*Math.log(Math.log(n)), 10);
     }
 
+	// Problem 8 Misinterpretation
+    function prodOfNIntsWithIdenticalDigits (strNum, n, base) {
+        base = base || 10;
+
+		var i, j = 0, consNums = [], result = 1;
+		
+		consNums[0] = "";
+		for (i = 0; i < strNum.length; i += 1) {
+			if (strNum[i] === strNum[i + 1]) {
+				consNums[j] += strNum[i];
+				if (strNum[i + 1] !== strNum[i + 2]) {
+					consNums[j] += strNum[i + 1];
+					j += 1;
+					consNums[j] = "";
+				}
+			}
+		}
+		consNums = consNums.sort(function (a, b) {
+			return parseInt(a, base) < parseInt(b, base);
+		});
+
+		for (i = 0; i < n; i += 1) {
+			result *= parseInt(consNums[i], base);
+		}
+
+		return result;
+    }
+
     return{
         // Problem 8
         largestProdOfNConsDigits : function (strNum, n, base) {
             base = base || 10;
 
-			var i, j = 0, consNums = [], result = 1;
+			var i, temp, result = 1, array = strNum.split(/0+/).filter(function (subNum) {
+				return (subNum.length >= n);
+			});
 			
-			consNums[0] = "";
-			for (i = 0; i < strNum.length; i += 1) {
-				if (strNum[i] === strNum[i + 1]) {
-					consNums[j] += strNum[i];
-					if (strNum[i + 1] !== strNum[i + 2]) {
-						consNums[j] += strNum[i + 1];
-						j += 1;
-						consNums[j] = "";
-					}
+			for(i = 0; i < array.length; i += 1) {
+				temp = katas._largestProdOfNNonZeroConsDigits(array[i], n, base);
+				if (temp > result) {
+					result = temp;
 				}
 			}
-			consNums = consNums.sort(function (a, b) {
-				return parseInt(a, base) < parseInt(b, base);
-			});
-
-			for (i = 0; i < n; i += 1) {
-				result *= parseInt(consNums[i], base);
-			}
-
+			
 			return result;
         },
+
+		// Problem 8 helper
+		_largestProdOfNNonZeroConsDigits: function (strNum, n, base) {
+			base = base || 10;
+			
+			var i, j, temp, result = 1;
+			
+			for (i = 0; i + n - 1 < strNum.length; i += 1) {
+				temp = 1;
+				for (j = i; j < i + n; j += 1) {
+					temp *= parseInt(strNum[j], base);
+				}
+				if (temp > result) {
+					result = temp;
+				}
+			}
+			
+			return result;
+		},
 
         // Problem 7
         nthPrime : function (n) {
