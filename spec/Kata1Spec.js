@@ -193,6 +193,10 @@ describe("Problem 9", function () {
 		expect(katas.pythagoreanTripletProduct(12)).toEqual(60);
 	});
 	
+	it("returns 5*12*13 given 5+12+13", function () {
+		expect(katas.pythagoreanTripletProduct(30)).toEqual(780);
+	});
+	
 	it("returns ??? given 1000", function () {
 		expect(katas.pythagoreanTripletProduct(1000)).toEqual("???");
 	});	

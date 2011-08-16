@@ -100,18 +100,25 @@ var katas = (function(){
     return{
 		// Problem 9
 		pythagoreanTripletProduct : function (sumOfTriplet) {
-			var m = 1, n = 2, a = 1, b = 1, c = 1;
+			var m = 1,
+				n = Math.abs((sumOfTriplet / (2 * m)) - m),
+				a = 1, b = 1, c = 1;
 			
-			while ((2 * m) * (m + n) <= sumOfTriplet) {
-				console.log(sumOfTriplet, (2 * m) * (m + n));
-				n += 1;
+			while ((2 * m) * (m + n) <= sumOfTriplet ) {
+				console.log(sumOfTriplet, "m="+m,"n="+n,(2 * m) * (m + n));
 				m += 1;
+				n = Math.abs((sumOfTriplet / (2 * m)) - m);
+				a = Math.abs((m * m) - (n * n));
+				b = 2 * m * n;
+				c = (m * m) + (n * n);
+				console.log("a="+a,"b="+b,"c="+c);
 			}
+			m -= 1;
+			n = Math.abs((sumOfTriplet / (2 * m)) - m);
 			a = Math.abs((m * m) - (n * n));
 			b = 2 * m * n;
 			c = (m * m) + (n * n);
-			console.log(m,n,a,b,c,a+b+c);
-			
+			console.log("a-final="+a,"b="+b,"c="+c);
 			return a * b * c;
 		},
 	
