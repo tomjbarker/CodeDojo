@@ -197,7 +197,7 @@ describe("Problem 9", function () {
 		expect(katas.pythagoreanTripletProduct(30)).toEqual(780);
 	});
 	
-	it("returns ??? given 1000", function () {
-		expect(katas.pythagoreanTripletProduct(1000)).toEqual("???");
+	it("returns 31875000 given 1000", function () {
+		expect(katas.pythagoreanTripletProduct(1000)).toEqual(31875000);
 	});	
 });
