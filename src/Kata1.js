@@ -98,6 +98,21 @@ var katas = (function(){
     }
 
     return{
+		// Problem 10
+		sumOfPrimes : function (ceiling) {
+            var array, i, len, result = 0;
+
+            array = sieveOfEratosthenes(ceiling);
+			
+			for (i = 2, len = array.length >>> 0; i < len; i += 1) {
+				if (array[i] === undefined) {
+					result += i;
+				}
+			}
+			
+			return result;
+		},
+	
 		// Problem 9
 		pythagoreanTripletProduct : function (sumOfTriplet) {
 			var	m, n, k, a, b, c;

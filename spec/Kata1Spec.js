@@ -200,4 +200,20 @@ describe("Problem 9", function () {
 	it("returns 31875000 given 1000", function () {
 		expect(katas.pythagoreanTripletProduct(1000)).toEqual(31875000);
 	});	
+	
+	it("returns 31875000 given 1000000", function () {
+		expect(katas.pythagoreanTripletProduct(1000000)).toEqual(31875000000000000);
+	});
+});
+
+describe("Problem 10", function () {
+	// Calculate the sum of all the primes below two million.
+	
+	it("returns 17 given 10", function () {
+		expect(katas.sumOfPrimes(10)).toEqual(17);
+	});
+	
+	it("returns 142913828922 given 2000000", function () {
+		expect(katas.sumOfPrimes(2000000)).toEqual(142913828922);
+	});
 });
