@@ -98,6 +98,34 @@ var katas = (function(){
     }
 
     return{
+		// Problem 11
+		largestNInARow : function (n, grid) {
+			var i, j, k, gridLen, row, rowLen, test, result;
+			
+			result = 0;
+			for (i = 0, gridLen = grid.length >>> 0; i < gridLen; i += 1) {
+				row = grid[i];
+				// Diag Right
+				// Diag Left
+				// Vert
+				if (grid[i + (n - 1)] !== undefined) {
+					
+				}
+				// Horz
+				for (j = 0, rowLen = row.length >>> 0; j < rowLen - (n - 1); j += 1) {
+					if (row[j + (n - 1)] !== undefined) {
+						test = 1;
+						for (k = j; k < n; k += 1) {
+							test *= parseInt(row[k], 10);
+						}
+						if (test > result) {
+							result = test;
+						}
+					}
+				}
+			}
+		},
+	
 		// Problem 10
 		sumOfPrimes : function (ceiling) {
             var array, i, len, result = 0;
